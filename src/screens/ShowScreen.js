@@ -1,4 +1,5 @@
 import React, { useContext } from "react"
+import { useRoute } from "@react-navigation/native"
 import { Context } from "../context/BlogContext"
 
 import {
@@ -10,13 +11,16 @@ import {
 
 const ShowScreen = ({ navigation }) => {
   const { state } = useContext(Context)
-  console.log('state', state)
+  //console.log('state', state)
+  const { id } = useRoute().params
 
-  const id = navigation.getParam("id")
+  const blogPost = state.find((blogPost) => blogPost.id === id)
+  
+  //console.log(navigation)
   return (
     <View>
       <View>
-        <Text >{id}</Text>
+        <Text >{blogPost.title}</Text>
       </View>
       
     </View>
