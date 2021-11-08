@@ -11,8 +11,8 @@ import {
   TouchableOpacity,
 } from "react-native"
 
-const IndexScreen = () => {
-  const { state, addBlogPost } = useContext(Context)
+const IndexScreen = ({ navigation }) => {
+  const { state, addBlogPost, deleteBlogPost } = useContext(Context)
   //console.log('state from index screen: ', state)
   return (
     <View>
@@ -22,14 +22,18 @@ const IndexScreen = () => {
           keyExtractor={(blogPost) => blogPost.id}
           renderItem={({ item }) => {
             return (
-              <View style={styles.row}>
-                <Text style={styles.title}>
-                  {item.title} - {item.id}
-                </Text>
-                <TouchableOpacity>
-                  <Feather style={styles.icon} name='trash' />
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+              onPress={()=> navigation.navigate('Show', {id: item.id})}
+              >
+                <View style={styles.row}>
+                  <Text style={styles.title}>
+                    {item.title} - {item.id}
+                  </Text>
+                  <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                    <Feather style={styles.icon} name='trash' />
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
             )
           }}
         />

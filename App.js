@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import  { Provider }  from "./src/context/BlogContext"
 
 import IndexScreen from "./src/screens/IndexScreen"
+import ShowScreen from "./src/screens/ShowScreen"
 
 const Stack = createStackNavigator()
 
@@ -27,6 +28,13 @@ const App = () => {
           component={IndexScreen}
           options={{
             title: "Index Screen",
+          }}
+        />
+         <Stack.Screen
+          name='Show'
+          component={ShowScreen}
+          options={{
+            title: "Show Screen",
           }}
         />
       </Stack.Navigator>
