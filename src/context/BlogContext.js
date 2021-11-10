@@ -1,39 +1,41 @@
-import createDataContext from "./createDataContext"
+import createDataContext from './createDataContext'
 
 const blogReducer = (state, action) => {
-  switch (action.type) {
-    case "ADD_BLOG":
-      return [...state, {
-        id: Math.floor(Math.random() * 999),
-        title: `My blog number ${state.length + 1}`,
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-    
-    }]
-    case "DELETE_BLOG":
-      return state.filter(blog => blog.id !== action.payload)
-    default:
-      return state
-  }
+    switch (action.type) {
+        case 'ADD_BLOG':
+            return [
+                ...state,
+                {
+                    id: Math.floor(Math.random() * 999),
+                    title: action.payload.title,
+                    content: action.payload.content
+                }
+            ]
+        case 'DELETE_BLOG':
+            return state.filter((blog) => blog.id !== action.payload)
+        default:
+            return state
+    }
 }
 
 const addBlogPost = (dispatch) => {
-    return () => {
-        dispatch({type: "ADD_BLOG"})
+    return (title, content, callback) => {
+        dispatch({ type: 'ADD_BLOG' , payload: { title, content }})
+        callback()
     }
 }
 
 const deleteBlogPost = (dispatch) => {
-  return (id) => {
-      dispatch({type: "DELETE_BLOG",  payload: id})
-  }
+    return (id) => {
+        dispatch({ type: 'DELETE_BLOG', payload: id })
+    }
 }
 
 export const { Context, Provider } = createDataContext(
-  blogReducer,
-  { addBlogPost, deleteBlogPost },
-  []
+    blogReducer,
+    { addBlogPost, deleteBlogPost },
+    []
 )
-
 
 /* 
 BlogContext will be used to pass data from the BlogProvider to the Blog component.
@@ -67,4 +69,6 @@ const addBlogPost = () => {
   )
 }
 
+callback() represents the 3rd argument that is passed to the addBlogPost function on CreateScreen, on the 
+Add Post button
 */
