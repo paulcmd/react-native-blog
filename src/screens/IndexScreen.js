@@ -13,7 +13,6 @@ import {
 
 const IndexScreen = ({ navigation }) => {
     const { state, deleteBlogPost } = useContext(Context)
-    console.log('navigation from Index: ', navigation)
     return (
         <View>
             <View>

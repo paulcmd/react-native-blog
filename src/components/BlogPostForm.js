@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react'
 import { Context } from '../context/BlogContext'
-import BlogPostForm from '../components/BlogPostForm'
 
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
 
-
-const CreateScreen = ({ navigation }) => {
-
+const BlogPostForm = ({ navigation }) => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
 
@@ -30,12 +27,14 @@ const CreateScreen = ({ navigation }) => {
                     onChangeText={(text) => setContent(text)}
                 />
             </View>
-            <Button 
-            style={styles.button}
-            title='Add Post'
-            onPress={() => {
-                addBlogPost(title, content, () => navigation.navigate('Index'))
-            }}
+            <Button
+                style={styles.button}
+                title="Add Post"
+                onPress={() => {
+                    addBlogPost(title, content, () =>
+                        navigation.navigate('Index')
+                    )
+                }}
             />
         </View>
     )
@@ -61,4 +60,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CreateScreen
+export default BlogPostForm

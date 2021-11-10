@@ -4,10 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from './src/context/BlogContext'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
+import { EvilIcons } from '@expo/vector-icons'
+
 
 import IndexScreen from './src/screens/IndexScreen'
 import ShowScreen from './src/screens/ShowScreen'
 import CreateScreen from './src/screens/CreateScreen'
+import EditScreen from './src/screens/EditScreen'
+import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio'
 
 const Stack = createStackNavigator()
 
@@ -34,7 +38,7 @@ const App = () => {
                         headerRight: () => (
                             <TouchableOpacity
                                 onPress={() => navigation.navigate('Create')}
-                                style={styles.headerRight} 
+                                style={styles.headerRight}
                             >
                                 <Feather name="plus" size={30} color="black" />
                             </TouchableOpacity>
@@ -44,15 +48,34 @@ const App = () => {
                 <Stack.Screen
                     name="Show"
                     component={ShowScreen}
-                    options={{
-                        title: 'Show Screen'
-                    }}
+                    options={({ navigation, route }) => ({
+                        title: 'Show Screen',
+                        headerRight: () => (
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('Edit', { id: route.params.id })}
+                                style={styles.headerRight}
+                            >
+                                <EvilIcons
+                                    name="pencil"
+                                    size={30}
+                                    color="black"
+                                />
+                            </TouchableOpacity>
+                        )
+                    })}
                 />
                 <Stack.Screen
                     name="Create"
                     component={CreateScreen}
                     options={{
                         title: 'Create Screen'
+                    }}
+                />
+                <Stack.Screen
+                    name="Edit"
+                    component={EditScreen}
+                    options={{
+                        title: 'Edit Screen'
                     }}
                 />
             </Stack.Navigator>

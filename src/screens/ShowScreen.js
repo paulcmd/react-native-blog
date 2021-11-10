@@ -4,9 +4,10 @@ import { Context } from '../context/BlogContext'
 
 import { View, Text, StyleSheet } from 'react-native'
 
-const ShowScreen = ({ navigation }) => {
+const ShowScreen = ({ navigation, route }) => {
     const { state } = useContext(Context)
     //console.log('state', state)
+    //console.log('route', route.params.id)
     const { id } = useRoute().params
 
     const blogPost = state.find((blogPost) => blogPost.id === id)
