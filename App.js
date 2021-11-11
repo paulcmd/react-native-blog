@@ -52,7 +52,11 @@ const App = () => {
                         title: 'Show Screen',
                         headerRight: () => (
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('Edit', { id: route.params.id })}
+                                onPress={() =>
+                                    navigation.navigate('Edit', {
+                                        id: route.params.id
+                                    })
+                                }
                                 style={styles.headerRight}
                             >
                                 <EvilIcons

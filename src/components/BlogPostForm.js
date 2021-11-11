@@ -1,13 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
-import { Context } from '../context/BlogContext'
 
 
-const BlogPostForm = ({ navigation, onSubmit }) => {
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
+const BlogPostForm = ({ onSubmit, initialValues }) => {
+    const [title, setTitle] = useState(initialValues.title)
+    const [content, setContent] = useState(initialValues.content)
 
-    const { addBlogPost } = useContext(Context)
 
     return (
         <View>
@@ -36,6 +34,18 @@ const BlogPostForm = ({ navigation, onSubmit }) => {
     )
 }
 
+BlogPostForm.defaultProps = {
+    initialValues: {
+        title: '',
+        content: ''
+    }
+}
+
+/* 
+createScreen does not have initialValues, so it will only have an empty string 
+for title and content
+*/
+
 const styles = StyleSheet.create({
     input: {
         fontSize: 18,
@@ -57,3 +67,4 @@ const styles = StyleSheet.create({
 })
 
 export default BlogPostForm
+
