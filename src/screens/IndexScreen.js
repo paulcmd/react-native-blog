@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Context } from '../context/BlogContext'
 import Feather from 'react-native-vector-icons/Feather'
 
@@ -12,7 +12,12 @@ import {
 } from 'react-native'
 
 const IndexScreen = ({ navigation }) => {
-    const { state, deleteBlogPost } = useContext(Context)
+    const { state, deleteBlogPost, getBlogPosts } = useContext(Context)
+
+    useEffect(() => {
+        getBlogPosts()
+    },[])
+    
     return (
         <View>
             <View>
@@ -65,6 +70,10 @@ IndexScreen.navigationOptions = ({ navigation }) => {
 
 /* 
 navigationOptions will run the function just before the screen is rendered.
+
+we do not call functions that are coming from useContext directly eg getBlogPost.
+If we do, they will make an api call, our state will be updated, and then the function
+will be called again. we will get an infinite loop. use useEffect instead to call the function.
 */
 
 const styles = StyleSheet.create({
