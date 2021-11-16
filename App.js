@@ -44,6 +44,7 @@ const App = () => {
                             </TouchableOpacity>
                         )
                     })}
+                    
                 />
                 <Stack.Screen
                     name="Show"

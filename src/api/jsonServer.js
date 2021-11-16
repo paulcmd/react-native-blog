@@ -1,10 +1,8 @@
 import axios from 'axios'
 
 export default axios.create({
-    baseURL: 'https://8525-2607-fb90-e51e-a9e7-6c2a-3248-f1b4-ccbc.ngrok.io'
+    baseURL: 'http://ef29-2607-fb90-e51e-a9e7-9491-b32c-30ce-e617.ngrok.io'
 })
-
-
 
 // (async function () {
 //     const url = await ngrok.connect(3000)

@@ -13,11 +13,19 @@ import {
 
 const IndexScreen = ({ navigation }) => {
     const { state, deleteBlogPost, getBlogPosts } = useContext(Context)
-
+    //console.log('NAVIGATION OBJECT : ', navigation)
     useEffect(() => {
         getBlogPosts()
-    },[])
-    
+
+        const listener = navigation.addListener('focus', () => {
+            getBlogPosts()
+        })
+
+       return () => {
+              listener.remove()
+       }
+    }, [])
+
     return (
         <View>
             <View>
@@ -74,6 +82,22 @@ navigationOptions will run the function just before the screen is rendered.
 we do not call functions that are coming from useContext directly eg getBlogPost.
 If we do, they will make an api call, our state will be updated, and then the function
 will be called again. we will get an infinite loop. use useEffect instead to call the function.
+
+const listener = navigation.addListener('didFocus', () => {
+            getBlogPosts()
+        })
+
+        return () => {
+            listener.remove()
+        }
+
+whenever we navigate to the screen(it gets on focus), we will call getBlogPosts again. 
+
+the listener will remove itself after our instance of IndexScreen is no longer on 
+focus/showing on the screen
+
+addListener in nav v 5 is called focus and not didFocus
+
 */
 
 const styles = StyleSheet.create({

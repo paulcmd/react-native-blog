@@ -9,7 +9,7 @@ const blogReducer = (state, action) => {
             return [
                 ...state,
                 {
-                    id: Math.floor(Math.random() * 999),
+                    id: action.payload.id,
                     title: action.payload.title,
                     content: action.payload.content
                 }
@@ -39,21 +39,42 @@ const getBlogPosts = (dispatch) => {
 }
 
 const addBlogPost = (dispatch) => {
-    return (title, content, callback) => {
-        dispatch({ type: 'ADD_BLOG', payload: { title, content } })
+    return async (title, content, callback) => {
+        const { data } = await jsonServer.post('/blogposts', { title, content })
+        console.log('response from server : ', data)
+        dispatch({
+            type: 'ADD_BLOG',
+            payload: {
+                id: data.id,
+                title: data.title,
+                content: data.content
+            }
+        })
         callback ? callback() : null
     }
 }
 
 const editBlogPost = (dispatch) => {
-    return (id, title, content, callback) => {
-        dispatch({ type: 'EDIT_BLOG', payload: { id, title, content } })
+    return async (id, title, content, callback) => {
+        const { data } = await jsonServer.put(`/blogposts/${id}`, {
+            title,
+            content
+        })
+        dispatch({
+            type: 'EDIT_BLOG',
+            payload: {
+                id: data.id,
+                title: data.title,
+                content: data.content
+            }
+        })
         callback ? callback() : null
     }
 }
 
 const deleteBlogPost = (dispatch) => {
-    return (id) => {
+    return async (id) => {
+        await jsonServer.delete(`/blogposts/${id}`)
         dispatch({ type: 'DELETE_BLOG', payload: id })
     }
 }
